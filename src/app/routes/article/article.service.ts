@@ -524,13 +524,10 @@ export const addComment = async (body: string, slug: string, id: number) => {
   };
 };
 
-export const deleteComment = async (id: number, userId: number) => {
-  const comment = await prisma.comment.findFirst({
+const findCommentById = async (id: number) =>
+  prisma.comment.findUnique({
     where: {
       id,
-      author: {
-        id: userId,
-      },
     },
     select: {
       author: {
@@ -542,14 +539,11 @@ export const deleteComment = async (id: number, userId: number) => {
     },
   });
 
+export const deleteComment = async (id: number, userId: number) => {
+  const comment = await findCommentById(id);
+
   if (!comment) {
     throw new HttpException(404, {});
-  }
-
-  if (comment.author.id !== userId) {
-    throw new HttpException(403, {
-      message: 'You are not authorized to delete this comment',
-    });
   }
 
   await prisma.comment.delete({
