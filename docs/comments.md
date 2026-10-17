@@ -17,7 +17,8 @@ Rules:
 
 - The body must not be empty. An empty body is rejected with `422` and the body
   `{ "errors": { "body": ["can't be blank"] } }`.
-- There is no maximum body length.
+- The body is limited to 500 characters. A longer body is rejected with `422` and the body
+  `{ "errors": { "body": ["is too long (maximum is 500 characters)"] } }`.
 
 ## Delete a comment
 

@@ -470,9 +470,17 @@ export const getCommentsByArticle = async (slug: string, id?: number) => {
   return result;
 };
 
+const MAX_COMMENT_BODY_LENGTH = 500;
+
 export const addComment = async (body: string, slug: string, id: number) => {
   if (!body) {
     throw new HttpException(422, { errors: { body: ["can't be blank"] } });
+  }
+
+  if (body.length > MAX_COMMENT_BODY_LENGTH) {
+    throw new HttpException(422, {
+      errors: { body: [`is too long (maximum is ${MAX_COMMENT_BODY_LENGTH} characters)`] },
+    });
   }
 
   const article = await prisma.article.findUnique({
