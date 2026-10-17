@@ -40,6 +40,7 @@ const buildFindAllQuery = (query: any, id: number | undefined) => {
   };
 
   queries.push(authorQuery);
+  queries.push({ archived: false });
 
   if ('tag' in query) {
     queries.push({

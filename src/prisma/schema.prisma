@@ -21,6 +21,7 @@ model Article {
   authorId    Int
   favoritedBy User[]    @relation("UserFavorites")
   comments    Comment[]
+  archived    Boolean   @default(false)
 }
 
 model Comment {
