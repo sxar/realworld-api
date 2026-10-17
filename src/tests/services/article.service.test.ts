@@ -47,6 +47,7 @@ describe('ArticleService', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         authorId: 456,
+        archived: false,
         tagList: [],
         favoritedBy: [],
         author: {
@@ -108,6 +109,7 @@ describe('ArticleService', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         authorId: 456,
+        archived: false,
         tagList: [],
         favoritedBy: [],
         author: {
