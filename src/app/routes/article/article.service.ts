@@ -560,7 +560,7 @@ export const deleteComment = async (id: number, userId: number) => {
 };
 
 export const favoriteArticle = async (slugPayload: string, id: number) => {
-  const article = await prisma.article.update({
+  const { _count, ...article } = await prisma.article.update({
     where: {
       slug: slugPayload,
     },
@@ -599,13 +599,14 @@ export const favoriteArticle = async (slugPayload: string, id: number) => {
     author: profileMapper(article.author, id),
     tagList: article?.tagList.map((tag: Tag) => tag.name),
     favorited: article.favoritedBy.some((favorited: any) => favorited.id === id),
+    favoritesCount: _count?.favoritedBy,
   };
 
   return result;
 };
 
 export const unfavoriteArticle = async (slugPayload: string, id: number) => {
-  const article = await prisma.article.update({
+  const { _count, ...article } = await prisma.article.update({
     where: {
       slug: slugPayload,
     },
@@ -644,6 +645,7 @@ export const unfavoriteArticle = async (slugPayload: string, id: number) => {
     author: profileMapper(article.author, id),
     tagList: article?.tagList.map((tag: Tag) => tag.name),
     favorited: article.favoritedBy.some((favorited: any) => favorited.id === id),
+    favoritesCount: _count?.favoritedBy,
   };
 
   return result;
